@@ -1,0 +1,14 @@
+﻿<Properties StartupConfiguration="{88DE2DD6-1F45-4534-978F-5AE983F7D0A6}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FunctionalTester/Program.fs">
+    <Files>
+      <File FileName="FunctionalTester/Program.fs" Line="5" Column="6" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.FunctionalTester PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
