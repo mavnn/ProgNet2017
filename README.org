@@ -1,0 +1,8 @@
+This tutorial is designed to be an introduction to Functional Programming,
+presented at Progressive .NET 2017; it will probably make a lot less sense
+without my talky bits, but feel free to give it a go anyway if you're feeling
+brave!
+
+It assumes you'll be working with dotnet core 2.0.
+
+Grab the outline for the tutorial [[/Instructions/outline.html][in the "Instructions" folder]].

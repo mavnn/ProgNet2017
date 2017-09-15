@@ -108,28 +108,9 @@ let run () =
     gameTurns directions
     |> Seq.iter drawTurn
 
-let runTimed () =
-    drawTurn start
-
-    let directions =
-        Observable.ToObservable(Seq.concat [seq { yield Stay }; Seq.unfold inputUnfolder Stay],
-                                Reactive.Concurrency.NewThreadScheduler())
-
-    let gameTicks =
-        Observable.Interval(TimeSpan.FromSeconds 1.)
-
-    let tickWithDirection =
-        Observable.WithLatestFrom(gameTicks, directions, fun _ dir -> dir)
-
-    tickWithDirection
-    |> Observable.ToEnumerable
-    |> gameTurns
-    |> Seq.iter drawTurn
-
 try
     Console.Clear()
     Console.CursorVisible <- false
     run ()
-    // runTimed()
 finally
     Console.CursorVisible <- true

@@ -1,0 +1,492 @@
+# -*- org-confirm-babel-evaluate: nil -*-
+#+PROPERTY: header-args:fsharp :tangle yes
+#+TITLE: Functional Programming with F#
+#+SETUPFILE: theme-readtheorg.setup
+#+OPTIONS: toc:3
+
+* Topics and F# cheatsheet
+** Immutability
+
+F# provides "Records" - immutable data types. This means once you have created a record, you cannot change the value of any of its fields.
+
+As they are immutable, Records implement value based equality out of the box - if they have fields with the same values, they are considered equal regardless of whether they are the same instance.
+
+Defining a record:
+
+#+BEGIN_SRC fsharp
+type MyRecord =
+    { name : string
+      age : int }
+#+END_SRC
+
+Generally record fields are given lower case names, partly to match the OCaml convention (where they originally came from) and partly to distinguish them immediately from classes.
+
+** Pure Functions (Referential Transparency)
+
+Defining a function in F# looks like this:
+
+#+BEGIN_SRC fsharp :exports both
+let prefixName prefix name =
+    sprintf "%s %s" prefix name
+#+END_SRC
+
+#+RESULTS:
+: val prefixName : prefix:string -> name:string -> string
+
+~prefix~ and ~name~ are parameters; when space separated like this they are "curried" (from Howard Curry, not the Vindaloo type). Curried functions can be "partially applied" by supplying some but not all of their parameters.
+
+#+BEGIN_SRC fsharp :exports both
+let mister =
+    prefixName "Mr."
+#+END_SRC
+
+#+RESULTS:
+: val mister : (string -> string)
+
+Curried functions are typed as functions which return functions - ~prefixName~ above has type ~string -> string -> string~ (a function which takes a string and returns a function which takes a string).
+
+Both of the functions above are "Pure"; that means that if you give them the same input, you will always get the same output. F# doesn't enforce "pureness" in any way, but it is one of the cores of functional programming.
+
+#+BEGIN_SRC fsharp :exports none
+open System
+let writeToDb (uid : Guid) (name : string) =
+    ()
+#+END_SRC
+
+#+RESULTS:
+: val writeToDb : uid:System.Guid -> name:string -> unit
+
+#+BEGIN_SRC fsharp :exports both
+let impure userId name =
+    writeToDb userId name
+#+END_SRC
+
+#+RESULTS:
+: val impure : userId:Guid -> name:string -> unit
+
+Impure functions by contrast, have side effects outside of the function body (such as writing to or reading from the database, reading user input, etc).
+
+** Union Types
+
+In theory union types are unrelated to functional programming concepts - but in practice they tend to show up a lot in functional programming languages.
+
+#+BEGIN_SRC fsharp
+type ContactDetails =
+    | EmailAddress of string
+    | PhoneNumber of string
+#+END_SRC
+
+#+RESULTS:
+: type ContactDetails =
+:   | EmailAddress of string
+:   | PhoneNumber of string
+
+This represents a type which is either an ~EmailAddress~ or a ~PhoneNumber~ - but it cannot be both.
+
+You can then "pattern match" on the union type when it is time to use it:
+
+#+BEGIN_SRC fsharp :exports none
+let sendEmail emailAddress =
+    ()
+
+let roboCall phoneNumber =
+    ()
+#+END_SRC
+
+#+RESULTS:
+: val sendEmail : emailAddress:'a -> unit
+: val roboCall : phoneNumber:'a -> unit
+
+#+BEGIN_SRC fsharp :exports both
+let sendMessage contactDetails =
+    match contactDetails with
+    | EmailAddress em -> sendEmail em
+    | PhoneNumber pn -> roboCall pn
+#+END_SRC
+
+#+RESULTS:
+: val sendMessage : contactDetails:ContactDetails -> unit
+
+The compiler will warn if not all of the options are covered.
+
+** Higher order functions
+
+Functional programming involves a lot of coding with, well, functions. Let's have a look at processing a list:
+
+#+BEGIN_SRC fsharp :exports both
+let processList myFunc listOfValues =
+    listOfValues
+    |> List.map myFunc
+#+END_SRC
+
+As you can see here, ~myFunc~ (an argument passed into ~processList~) is itself a function.
+
+Another common technique is to wrap a function using another function:
+
+#+BEGIN_SRC fsharp :exports both
+let loggedFunction nameInLogs func =
+    let wrapped x =
+        printfn "Starting %s" nameInLogs
+        let result = func x
+        printfn "Finishing %s" nameInLogs
+        result
+    wrapped
+#+END_SRC
+
+The ~loggedFunction~ function will take a name to log against and a function, and return a function which does the same thing except with "logging".
+
+* Exercises
+** ObservableSnake
+
+*** Functional console game
+
+[[./snake.gif]]
+
+*** Currently *very* slow to redraw
+
+*** Make the game more efficient by only updating the console where it has actually changed:
+
+- First write a new ~changesBetweenTurns~ function that takes a new and old ~GameData~ and returns only the changed locations
+- Use this new function to create ~drawTurnChange~ function (which will be of type ~GameData -> GameData -> unit~)
+- Make use of the ~Seq.pairwise~ function to update ~run~ with ~drawTurnChange~ instead of ~drawTurn~
+- Try the game and see how much faster it responds
+
+*** Replace the ~run~ function with the code below
+
+- Predict what it will do before you you it!
+
+#+BEGIN_SRC fsharp
+    drawTurn start
+
+    let directions =
+        Observable.ToObservable(
+            Seq.concat [seq { yield Stay }; Seq.unfold inputUnfolder Stay],
+            Reactive.Concurrency.NewThreadScheduler())
+
+    let gameTicks =
+        Observable.Interval(TimeSpan.FromSeconds 1.)
+
+    let tickWithDirection =
+        Observable.WithLatestFrom(gameTicks, directions, fun _ dir -> dir)
+
+    tickWithDirection
+    |> Observable.ToEnumerable
+    |> gameTurns
+    |> Seq.pairwise
+    |> Seq.iter drawTurnChange
+#+END_SRC
+
+*** See if you can add a new stream of events to the game: 
+
+- Randomly appearing food to eat (~a~ pples, maybe?)
+- Logic could be added in ~gameTurns~ function or as a new ~Observable~
+- Be careful if you use ~Observable.ToObservable~! If you use it with an eager sequence, it will start publishing as fast as your code will run. A possible work around is using ~Observable.Interval~ (docs at http://reactivex.io/documentation/operators/interval.html) and then ~Observable.map~
+
+** ObservableSnake extensions
+
+Congratulations! You've finished the core material for this section, feel free
+to either help other people out or have a go at the challenges below.
+
+*** Make the snake get longer each time the food is eaten
+
+*** Add a "death" mechanic for when the snake hits itself or a wall
+
+** Email Sender
+#+BEGIN_SRC dot :file email_sender.svg :cmdline -Kdot -Tsvg
+digraph { 
+  node [shape=box,fontname="Fira Code",style="filled",color="#aaffaa"]
+  edge [fontname="Fira Code"]
+
+  read [label="Read row from CSV"]
+  discard [label="Discard invalid or duplicate fields"]
+  generate [label="Generate email message from data"]
+  send [label="Send email message"]
+  repeat [label="Repeat for every row",color="#aaaaff"]
+  finish [label="Report count of successful emails",color="#aaaaff"]
+
+  read -> discard -> generate -> send -> repeat -> read
+  repeat -> finish [label="After all rows completed"]
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:email_sender.svg]]
+
+*** Run the tests!
+
+#+BEGIN_SRC sh
+dotnet run -p FunctionalTester/FunctionalTester.fsproj
+#+END_SRC
+
+*** Replace ~type CsvRow~ with a F# record type
+
+It should end up with three fields:
+
+- name
+- emailAddress
+- message
+
+*** Remove interfaces & turn classes that implemented the SRP interfaces into functions
+You should end up with three functions:
+
+- ~readCsv~ of type ~#Stream -> seq<CsvRow>~
+- ~sendEmail~ of type ~string -> string -> string -> bool~
+- ~processCsv~ of type ~(#Stream -> seq<CsvRow>) -> (string -> string -> string -> bool) -> #Stream -> int~
+
+*** Write a function that contains the logic in the body of the ~for row in...~ loop
+
+This function will be called with each individual ~CsvRow~ record; it should end up with a type of ~CsvRow -> int~, and return ~1~ if an email is sent or ~0~ if it isn't
+
+*** Rewrite ~processCsv~ using ~Seq.fold~
+
+Hint: use your function from above, and an initial state of ~0~
+
+*** Check all your tests still pass (after amending them)
+
+You'll need to replace references to ~CsvReader~ and ~CsvProcessor~ with calls to your new functions.
+
+*** Let's make the ~CsvRow~ to email message logic pluggable!
+
+*** Create a new ~EmailToSend~ record type with ~address~, ~subject~ & ~message~ fields
+
+*** Write a ~rowToEmail~ function of type ~CsvRow -> EmailToSend~
+
+*** Amend ~sendEmail~ to have type ~EmailToSend -> bool~
+
+*** Use ~Seq.map~ before your fold to update ~processCsv~; you'll also need to add a new ~dataMap~ parameter
+
+*** Open up FunctionalTester/Program.fs and add the new ~testCase~ below
+
+#+BEGIN_SRC fsharp
+        testCase "Test mapping" <| fun () ->
+            let inputRow =
+                { name = "Bob"
+                  emailAddress = "bob@example.com"
+                  message = "Hello Bob!" }
+            let result =
+                rowToEmail inputRow
+            Expect.equal result.address inputRow.emailAddress "Email address is transferred unchanged"
+            Expect.equal result.subject "Hi Bob!" "The name is used to create the subject"
+            Expect.equal result.message inputRow.message "Use the message as is"
+#+END_SRC
+
+*** Sanity check!
+
+You should now have a ~processCsv~ function that looks something like the one below:
+
+#+NAME: sanity
+#+BEGIN_SRC fsharp :exports both
+let processCsv read send mapData input =
+    read input
+    |> Seq.distinct
+    |> Seq.map mapData
+    |> Seq.fold (fun count data -> if send data then count + 1 else count) 0
+#+END_SRC
+
+That looks a little shorter than our previous interface and class definitions, but there is something else important to note. If you have any type annotations on your version of the function, remove them now.
+
+You'll notice that the resulting function signature is very generic:
+
+#+RESULTS: sanity
+: val processCsv :
+:   read:('a -> #seq<'c>) ->
+:     send:('d -> bool) -> mapData:('c -> 'd) -> input:'a -> int
+:     when 'c : equality
+
+Suddenly testing here has become a lot easier; we don't need a csv reader to test, we can pass in any
+function that takes an input and returns a sequence. We don't need a mock email sender, as the send function
+can be any function that returns a bool.
+
+** Email Sender extensions
+
+Congratulations, you've covered all of the core topics for this section!
+
+
+Now we start the brain stretching!
+
+In reality, most of these steps can fail; if they do, we want to know about it, but we do not want the pipeline to "break" - so throwing an exception is not going to help.
+
+We want a process that looks like this:
+
+#+BEGIN_SRC dot :file email_sender_advanced.svg :cmdline -Kdot -Tsvg
+digraph { 
+  node [shape=box,fontname="Fira Code",style="filled",color="#aaffaa"]
+  edge [fontname="Fira Code"]
+
+
+  read [label="Read row from CSV"]
+  discard [label="Discard invalid or duplicate fields"]
+  generate [label="Generate email message from data"]
+  send [label="Send email message"]
+  error [label="Capture error",color="#ffaaaa"]
+  repeat [label="Repeat for every row",color="#aaaaff"]
+  finish [label="Report successful sends and failure reasons",color="#aaaaff"]
+
+  read -> discard -> generate -> send -> repeat -> read
+  error -> repeat
+  read -> error [label="On error"]
+  generate -> error [label="On error"]
+  send -> error [label="On error"]
+  repeat -> finish [label="After all rows completed"]
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:email_sender_advanced.svg]]
+
+
+*** Open up the ~FunctionalSenderExtention~ project
+
+There's tests already set up in ~FunctionalTesterExtention~; this is just to make sure we're starting on the same page. Take a moment to compare this to the code you ended up with in the previous section - it should look similar.
+
+*** Error handling
+
+We do not want any of our functions to throw; instead we'll use the ~Choice<'a, 'b>~ to return either a ~Choice1Of2<'result>~ if the operation is successful, or a ~Choice2Of2<Exception>~ if the operation fails.
+
+Add this error handling function to your code:
+
+#+BEGIN_SRC fsharp :exports both
+let capture func x =
+    try
+        func x
+        |> Choice1Of2
+    with
+    | e -> Choice2Of2 e
+#+END_SRC
+
+*** Amend ~sendEmail~ to be a bit more "real life"
+
+Make ~sendEmail~ return the email address sent to if it succeeds, or throw on failure.
+
+*** Wrap your functions
+
+In diagram above, you can see that three of your functions have potential failure cases:
+
+- readCsv
+- rowToEmail
+- sendEmail
+
+Wrap each of them using the ~capture~ function to give you:
+
+- safeReadCsv
+- safeRowToEmail
+- safeSendEmail
+
+*** Work out how to combine our new functions
+
+We now need to rewrite ~processCsv~ with our safe functions; you'll notice the types no longer match up. This is another moment of higher order functions to the rescue. We're going to create a function which knows how to take one of our "safe" ~Choice<'a, Exception>~ results, unwrap ~'a~ and then pass ~'a~ into the next "safe" function.
+
+Write a method called ~bind~. Here is a ~let~ declaration with types to get you started:
+
+#+BEGIN_SRC fsharp
+let bind (func : 'a -> Choice<'b, exn>) (m : Choice<'a,exn>) =
+    ...your body here...
+#+END_SRC
+
+We'll also need a way (normally called ~return~) to take a "normal" value and wrap it into a ~Choice<'a, exn>~. In our case we don't even need a function for this: it is exactly what ~Choice1Of2~ does.
+
+
+*** Why is bind called bind?
+
+You may know that ~let~ in f# is referred to as a "let binding" - it "binds" a value to a name.
+
+So why is the ~bind~ function traditionally called bind? Look at the example below:
+
+#+BEGIN_SRC fsharp :exports none
+let bind (func : 'a -> Choice<'b, exn>) (m : Choice<'a,exn>) =
+    match m with
+    | Choice1Of2 v -> func v
+    | Choice2Of2 e -> Choice2Of2 e
+#+END_SRC
+
+#+RESULTS:
+: val bind : func:('a -> Choice<'b,exn>) -> m:Choice<'a,exn> -> Choice<'b,exn>
+
+#+BEGIN_SRC fsharp :exports both
+let safeProcessCsv read send mapData input =
+    read input
+    |> bind (fun rows ->
+    rows
+    |> Seq.distinct
+    |> Seq.map mapData
+    |> Seq.fold (fun count data -> if send data then count + 1 else count) 0
+    |> Choice1Of2)
+#+END_SRC
+
+#+RESULTS:
+: val safeProcessCsv :
+:   read:('a -> Choice<#seq<'c>,exn>) ->
+:     send:('d -> bool) -> mapData:('c -> 'd) -> input:'a -> Choice<int,exn>
+:     when 'c : equality
+
+You can see that the bind function allows us to "name" the rows result from a "safe" read function.
+
+*** Extract the logic in fold to a function
+
+Now that you want a safe send function, your fold logic will become more complicated. Extract the anonymous inline function and give it a name. Rewrite it so that it can cope with new ~safeSendEmail~ function.
+
+You'll want to define a type to store the state of the fold (should contain a list of email addresses and a list of expections).
+
+*** Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work
+
+*** Add some syntax sugar
+
+It turns out the pattern of using bind to unwrap values is so common, F# provides a
+feature called computational expressions to make such code easier to read.
+
+They can do a lot of other things as well, but let's create the simplest possible version.
+
+Computational Expressions are defined by creating a class; that class must have
+methods on with particular names and signatures.
+
+*** Create a class called CaptureBuilder
+
+- The syntax for creating a class is:
+
+#+BEGIN_SRC fsharp
+type MyClassName (one) =
+    // constructor logic
+    member this.MyMember (two) =
+        printfn "I'm an instance method on a class!"
+        one + two
+    static member Static () =
+        "A static method - shocking!"
+#+END_SRC
+
+#+RESULTS:
+: type MyClassName =
+:   class
+:     new : one:int -> MyClassName
+:     member MyMember : two:int -> int
+:     static member Static : unit -> string
+:   end
+
+- It needs to have members:
+
+~Bind~ with signature ~member Bind : (value : Choice1Of2<'a, exn> * continuation : 'a -> Choice<'b, exn>) -> Choice<'b, exn>~
+~Return~ with signature ~member Return : (value : 'a) -> Choice<'a, exn>~
+
+Use your existing ~bind~ function to build the ~Bind~ method.
+
+*** Initialize an a single instance for your new class
+
+#+BEGIN_SRC fsharp
+let capture = CaptureBuilder()
+#+END_SRC
+
+*** You can now write code that looks like this
+
+#+BEGIN_SRC fsharp
+let safeProcessCsv read send mapData input =
+    capture {
+      let! rows = read input
+      rows
+      |> Seq.distinct
+      |> Seq.map mapData
+      |> Seq.fold (fun count data -> if send data then count + 1 else count) 0
+      |> Choice1Of2
+    }
+#+END_SRC
+
+That ~let!~ there is where your bind code is being called. You can find out (much) more
+about Computational Expressions at [[http://fsharpforfunandprofit.com/series/computation-expressions.html][F# for Fun and Profit]].

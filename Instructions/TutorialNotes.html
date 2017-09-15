@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-09-15 Fri 07:34 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Functional Programming with F#</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Michael Newton" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Functional Programming with F#</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5b59439">1. Topics and F# cheatsheet</a>
+<ul>
+<li><a href="#orgefc4ec0">1.1. Immutability</a></li>
+<li><a href="#org3c03b4e">1.2. Pure Functions (Referential Transparency)</a></li>
+<li><a href="#org5cb9872">1.3. Union Types</a></li>
+<li><a href="#org4afcaee">1.4. Higher order functions</a></li>
+</ul>
+</li>
+<li><a href="#org7f60c60">2. Exercises</a>
+<ul>
+<li><a href="#orgb0b878e">2.1. ObservableSnake</a>
+<ul>
+<li><a href="#org87dc1c3">2.1.1. Functional console game</a></li>
+<li><a href="#orgf19d4a9">2.1.2. Currently <b>very</b> slow to redraw</a></li>
+<li><a href="#org6d0af56">2.1.3. Make the game more efficient by only updating the console where it has actually changed:</a></li>
+<li><a href="#org8ccae2b">2.1.4. Replace the <code>run</code> function with the code below</a></li>
+<li><a href="#orgbd03657">2.1.5. See if you can add a new stream of events to the game:</a></li>
+</ul>
+</li>
+<li><a href="#org514fefb">2.2. ObservableSnake extensions</a>
+<ul>
+<li><a href="#orgb3afe5c">2.2.1. Make the snake get longer each time the food is eaten</a></li>
+<li><a href="#org80ce87e">2.2.2. Add a "death" mechanic for when the snake hits itself or a wall</a></li>
+</ul>
+</li>
+<li><a href="#org66349c3">2.3. Email Sender</a>
+<ul>
+<li><a href="#orgf469178">2.3.1. Run the tests!</a></li>
+<li><a href="#orgbaeaa07">2.3.2. Replace <code>type CsvRow</code> with a F# record type</a></li>
+<li><a href="#org44fae9c">2.3.3. Remove interfaces &amp; turn classes that implemented the SRP interfaces into functions</a></li>
+<li><a href="#org0473bad">2.3.4. Write a function that contains the logic in the body of the <code>for row in...</code> loop</a></li>
+<li><a href="#org5eee9a9">2.3.5. Rewrite <code>processCsv</code> using <code>Seq.fold</code></a></li>
+<li><a href="#org0ebde36">2.3.6. Check all your tests still pass (after amending them)</a></li>
+<li><a href="#orgef61ad7">2.3.7. Let's make the <code>CsvRow</code> to email message logic pluggable!</a></li>
+<li><a href="#org20fcc59">2.3.8. Create a new <code>EmailToSend</code> record type with <code>address</code>, <code>subject</code> &amp; <code>message</code> fields</a></li>
+<li><a href="#orga166a3e">2.3.9. Write a <code>rowToEmail</code> function of type <code>CsvRow -&gt; EmailToSend</code></a></li>
+<li><a href="#org42020c1">2.3.10. Amend <code>sendEmail</code> to have type <code>EmailToSend -&gt; bool</code></a></li>
+<li><a href="#org83f62bd">2.3.11. Use <code>Seq.map</code> before your fold to update <code>processCsv</code>; you'll also need to add a new <code>dataMap</code> parameter</a></li>
+<li><a href="#org26a569b">2.3.12. Open up FunctionalTester/Program.fs and add the new <code>testCase</code> below</a></li>
+<li><a href="#org3fe6f8a">2.3.13. Sanity check!</a></li>
+</ul>
+</li>
+<li><a href="#org885364d">2.4. Email Sender extensions</a>
+<ul>
+<li><a href="#orgc1cfc58">2.4.1. Open up the <code>FunctionalSenderExtention</code> project</a></li>
+<li><a href="#org506dfc7">2.4.2. Error handling</a></li>
+<li><a href="#orgad859f2">2.4.3. Amend <code>sendEmail</code> to be a bit more "real life"</a></li>
+<li><a href="#org6589328">2.4.4. Wrap your functions</a></li>
+<li><a href="#org8336037">2.4.5. Work out how to combine our new functions</a></li>
+<li><a href="#orge5c9d01">2.4.6. Why is bind called bind?</a></li>
+<li><a href="#orge00aabf">2.4.7. Extract the logic in fold to a function</a></li>
+<li><a href="#org1f51b59">2.4.8. Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work</a></li>
+<li><a href="#orge6abc03">2.4.9. Add some syntax sugar</a></li>
+<li><a href="#org0afabd3">2.4.10. Create a class called CaptureBuilder</a></li>
+<li><a href="#org5ecff0b">2.4.11. Initialize an a single instance for your new class</a></li>
+<li><a href="#org8ce527c">2.4.12. You can now write code that looks like this</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5b59439" class="outline-2">
+<h2 id="org5b59439"><span class="section-number-2">1</span> Topics and F# cheatsheet</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgefc4ec0" class="outline-3">
+<h3 id="orgefc4ec0"><span class="section-number-3">1.1</span> Immutability</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+F# provides "Records" - immutable data types. This means once you have created a record, you cannot change the value of any of its fields.
+</p>
+
+<p>
+As they are immutable, Records implement value based equality out of the box - if they have fields with the same values, they are considered equal regardless of whether they are the same instance.
+</p>
+
+<p>
+Defining a record:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">MyRecord</span> =
+    <span style="color: #4f97d7;">{</span> name : <span style="color: #ce537a; font-weight: bold;">string</span>
+      age : <span style="color: #ce537a; font-weight: bold;">int</span> <span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+
+<p>
+Generally record fields are given lower case names, partly to match the OCaml convention (where they originally came from) and partly to distinguish them immediately from classes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3c03b4e" class="outline-3">
+<h3 id="org3c03b4e"><span class="section-number-3">1.2</span> Pure Functions (Referential Transparency)</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Defining a function in F# looks like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">prefixName</span> <span style="color: #7590db;">prefix</span> <span style="color: #7590db;">name</span> =
+    sprintf <span style="color: #2d9574;">"%s %s"</span> prefix name
+</pre>
+</div>
+
+<pre class="example">
+val prefixName : prefix:string -&gt; name:string -&gt; string
+
+</pre>
+
+<p>
+<code>prefix</code> and <code>name</code> are parameters; when space separated like this they are "curried" (from Howard Curry, not the Vindaloo type). Curried functions can be "partially applied" by supplying some but not all of their parameters.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">mister</span> =
+    prefixName <span style="color: #2d9574;">"Mr."</span>
+</pre>
+</div>
+
+<pre class="example">
+val mister : (string -&gt; string)
+
+</pre>
+
+<p>
+Curried functions are typed as functions which return functions - <code>prefixName</code> above has type <code>string -&gt; string -&gt; string</code> (a function which takes a string and returns a function which takes a string).
+</p>
+
+<p>
+Both of the functions above are "Pure"; that means that if you give them the same input, you will always get the same output. F# doesn't enforce "pureness" in any way, but it is one of the cores of functional programming.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">impure</span> <span style="color: #7590db;">userId</span> <span style="color: #7590db;">name</span> =
+    writeToDb userId name
+</pre>
+</div>
+
+<pre class="example">
+writeToDb userId name;;
+  ----^^^^^^^^^
+
+/Users/mavnn/Dropbox/@mavnn/Talks/ProgNETFunctionalProgramming/stdin(81,5): error FS0039: The value or constructor 'writeToDb' is not defined.
+
+</pre>
+
+<p>
+Impure functions by contrast, have side effects outside of the function body (such as writing to or reading from the database, reading user input, etc).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5cb9872" class="outline-3">
+<h3 id="org5cb9872"><span class="section-number-3">1.3</span> Union Types</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+In theory union types are unrelated to functional programming concepts - but in practice they tend to show up a lot in functional programming languages.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">ContactDetails</span> =
+    <span style="color: #87cefa;">|</span> EmailAddress <span style="color: #4f97d7; font-weight: bold;">of</span> string
+    <span style="color: #87cefa;">|</span> PhoneNumber <span style="color: #4f97d7; font-weight: bold;">of</span> string
+</pre>
+</div>
+
+<p>
+This represents a type which is either an <code>EmailAddress</code> or a <code>PhoneNumber</code> - but it cannot be both.
+</p>
+
+<p>
+You can then "pattern match" on the union type when it is time to use it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">sendMessage</span> <span style="color: #7590db;">contactDetails</span> =
+    <span style="color: #4f97d7; font-weight: bold;">match</span> contactDetails <span style="color: #4f97d7; font-weight: bold;">with</span>
+    <span style="color: #87cefa;">|</span> EmailAddress em -&gt; sendEmail em
+    <span style="color: #87cefa;">|</span> PhoneNumber pn -&gt; roboCall pn
+</pre>
+</div>
+
+<pre class="example">
+| EmailAddress em -&gt; sendEmail em
+  ------^^^^^^^^^^^^
+
+/Users/mavnn/Dropbox/@mavnn/Talks/ProgNETFunctionalProgramming/stdin(85,7): error FS0039: The pattern discriminator 'EmailAddress' is not defined.
+
+</pre>
+
+<p>
+The compiler will warn if not all of the options are covered.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4afcaee" class="outline-3">
+<h3 id="org4afcaee"><span class="section-number-3">1.4</span> Higher order functions</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Functional programming involves a lot of coding with, well, functions. Let's have a look at processing a list:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">processList</span> <span style="color: #7590db;">myFunc</span> <span style="color: #7590db;">listOfValues</span> =
+    listOfValues
+    <span style="color: #87cefa;">|&gt;</span> List.map myFunc
+</pre>
+</div>
+
+<pre class="example">
+val processList : myFunc:('a -&gt; 'b) -&gt; listOfValues:'a list -&gt; 'b list
+
+</pre>
+
+<p>
+As you can see here, <code>myFunc</code> (an argument passed into <code>processList</code>) is itself a function.
+</p>
+
+<p>
+Another common technique is to wrap a function using another function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">loggedFunction</span> <span style="color: #7590db;">nameInLogs</span> <span style="color: #7590db;">func</span> =
+    <span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">wrapped</span> <span style="color: #7590db;">x</span> =
+        printfn <span style="color: #2d9574;">"Starting %s"</span> nameInLogs
+        <span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">result</span> = func x
+        printfn <span style="color: #2d9574;">"Finishing %s"</span> nameInLogs
+        result
+    wrapped
+</pre>
+</div>
+
+<pre class="example">
+val loggedFunction : nameInLogs:string -&gt; func:('a -&gt; 'b) -&gt; ('a -&gt; 'b)
+
+</pre>
+
+<p>
+The <code>loggedFunction</code> function will take a name to log against and a function, and return a function which does the same thing except with "logging".
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7f60c60" class="outline-2">
+<h2 id="org7f60c60"><span class="section-number-2">2</span> Exercises</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgb0b878e" class="outline-3">
+<h3 id="orgb0b878e"><span class="section-number-3">2.1</span> ObservableSnake</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-org87dc1c3" class="outline-4">
+<h4 id="org87dc1c3"><span class="section-number-4">2.1.1</span> Functional console game</h4>
+<div class="outline-text-4" id="text-2-1-1">
+
+<div class="figure">
+<p><img src="./snake.gif" alt="snake.gif" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf19d4a9" class="outline-4">
+<h4 id="orgf19d4a9"><span class="section-number-4">2.1.2</span> Currently <b>very</b> slow to redraw</h4>
+</div>
+
+<div id="outline-container-org6d0af56" class="outline-4">
+<h4 id="org6d0af56"><span class="section-number-4">2.1.3</span> Make the game more efficient by only updating the console where it has actually changed:</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<ul class="org-ul">
+<li>First write a new <code>changesBetweenTurns</code> function that takes a new and old <code>GameData</code> and returns only the changed locations</li>
+<li>Use this new function to create <code>drawTurnChange</code> function (which will be of type <code>GameData -&gt; GameData -&gt; unit</code>)</li>
+<li>Make use of the <code>Seq.pairwise</code> function to update <code>run</code> with <code>drawTurnChange</code> instead of <code>drawTurn</code></li>
+<li>Try the game and see how much faster it responds</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8ccae2b" class="outline-4">
+<h4 id="org8ccae2b"><span class="section-number-4">2.1.4</span> Replace the <code>run</code> function with the code below</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<ul class="org-ul">
+<li>Predict what it will do before you you it!</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-fsharp">drawTurn start
+
+<span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">directions</span> =
+    Observable.ToObservable<span style="color: #4f97d7;">(</span>
+        Seq.concat <span style="color: #bc6ec5;">[</span>seq <span style="color: #2d9574;">{</span> <span style="color: #4f97d7; font-weight: bold;">yield</span> Stay <span style="color: #2d9574;">}</span>; Seq.unfold inputUnfolder Stay<span style="color: #bc6ec5;">]</span>,
+        Reactive.Concurrency.NewThreadScheduler<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">gameTicks</span> =
+    Observable.Interval<span style="color: #4f97d7;">(</span>TimeSpan.FromSeconds <span style="color: #a45bad;">1</span>.<span style="color: #4f97d7;">)</span>
+
+<span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">tickWithDirection</span> =
+    Observable.WithLatestFrom<span style="color: #4f97d7;">(</span>gameTicks, directions, <span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #7590db;">_</span> <span style="color: #7590db;">dir</span> -&gt; dir<span style="color: #4f97d7;">)</span>
+
+tickWithDirection
+<span style="color: #87cefa;">|&gt;</span> Observable.ToEnumerable
+<span style="color: #87cefa;">|&gt;</span> gameTurns
+<span style="color: #87cefa;">|&gt;</span> Seq.pairwise
+<span style="color: #87cefa;">|&gt;</span> Seq.iter drawTurnChange
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbd03657" class="outline-4">
+<h4 id="orgbd03657"><span class="section-number-4">2.1.5</span> See if you can add a new stream of events to the game:</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<ul class="org-ul">
+<li>Randomly appearing food to eat (<code>a</code> pples, maybe?)</li>
+<li>Logic could be added in <code>gameTurns</code> function or as a new <code>Observable</code></li>
+<li>Be careful if you use <code>Observable.ToObservable</code>! If you use it with an eager sequence, it will start publishing as fast as your code will run. A possible work around is using <code>Observable.Interval</code> (docs at <a href="http://reactivex.io/documentation/operators/interval.html">http://reactivex.io/documentation/operators/interval.html</a>) and then <code>Observable.map</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org514fefb" class="outline-3">
+<h3 id="org514fefb"><span class="section-number-3">2.2</span> ObservableSnake extensions</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Congratulations! You've finished the core material for this section, feel free
+to either help other people out or have a go at the challenges below.
+</p>
+</div>
+
+<div id="outline-container-orgb3afe5c" class="outline-4">
+<h4 id="orgb3afe5c"><span class="section-number-4">2.2.1</span> Make the snake get longer each time the food is eaten</h4>
+</div>
+
+<div id="outline-container-org80ce87e" class="outline-4">
+<h4 id="org80ce87e"><span class="section-number-4">2.2.2</span> Add a "death" mechanic for when the snake hits itself or a wall</h4>
+</div>
+</div>
+
+<div id="outline-container-org66349c3" class="outline-3">
+<h3 id="org66349c3"><span class="section-number-3">2.3</span> Email Sender</h3>
+<div class="outline-text-3" id="text-2-3">
+
+<div class="figure">
+<p><object type="image/svg+xml" data="email_sender.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf469178" class="outline-4">
+<h4 id="orgf469178"><span class="section-number-4">2.3.1</span> Run the tests!</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+<pre class="src src-sh">dotnet run -p FunctionalTester/FunctionalTester.fsproj
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbaeaa07" class="outline-4">
+<h4 id="orgbaeaa07"><span class="section-number-4">2.3.2</span> Replace <code>type CsvRow</code> with a F# record type</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+It should end up with three fields:
+</p>
+
+<ul class="org-ul">
+<li>name</li>
+<li>emailAddress</li>
+<li>message</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org44fae9c" class="outline-4">
+<h4 id="org44fae9c"><span class="section-number-4">2.3.3</span> Remove interfaces &amp; turn classes that implemented the SRP interfaces into functions</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+You should end up with three functions:
+</p>
+
+<ul class="org-ul">
+<li><code>readCsv</code> of type <code>#Stream -&gt; seq&lt;CsvRow&gt;</code></li>
+<li><code>sendEmail</code> of type <code>string -&gt; string -&gt; string -&gt; bool</code></li>
+<li><code>processCsv</code> of type <code>(#Stream -&gt; seq&lt;CsvRow&gt;) -&gt; (string -&gt; string -&gt; string -&gt; bool) -&gt; #Stream -&gt; int</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0473bad" class="outline-4">
+<h4 id="org0473bad"><span class="section-number-4">2.3.4</span> Write a function that contains the logic in the body of the <code>for row in...</code> loop</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+This function will be called with each individual <code>CsvRow</code> record; it should end up with a type of <code>CsvRow -&gt; int</code>, and return <code>1</code> if an email is sent or <code>0</code> if it isn't
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5eee9a9" class="outline-4">
+<h4 id="org5eee9a9"><span class="section-number-4">2.3.5</span> Rewrite <code>processCsv</code> using <code>Seq.fold</code></h4>
+<div class="outline-text-4" id="text-2-3-5">
+<p>
+Hint: use your function from above, and an initial state of <code>0</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0ebde36" class="outline-4">
+<h4 id="org0ebde36"><span class="section-number-4">2.3.6</span> Check all your tests still pass (after amending them)</h4>
+<div class="outline-text-4" id="text-2-3-6">
+<p>
+You'll need to replace references to <code>CsvReader</code> and <code>CsvProcessor</code> with calls to your new functions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgef61ad7" class="outline-4">
+<h4 id="orgef61ad7"><span class="section-number-4">2.3.7</span> Let's make the <code>CsvRow</code> to email message logic pluggable!</h4>
+</div>
+
+<div id="outline-container-org20fcc59" class="outline-4">
+<h4 id="org20fcc59"><span class="section-number-4">2.3.8</span> Create a new <code>EmailToSend</code> record type with <code>address</code>, <code>subject</code> &amp; <code>message</code> fields</h4>
+</div>
+
+<div id="outline-container-orga166a3e" class="outline-4">
+<h4 id="orga166a3e"><span class="section-number-4">2.3.9</span> Write a <code>rowToEmail</code> function of type <code>CsvRow -&gt; EmailToSend</code></h4>
+</div>
+
+<div id="outline-container-org42020c1" class="outline-4">
+<h4 id="org42020c1"><span class="section-number-4">2.3.10</span> Amend <code>sendEmail</code> to have type <code>EmailToSend -&gt; bool</code></h4>
+</div>
+
+<div id="outline-container-org83f62bd" class="outline-4">
+<h4 id="org83f62bd"><span class="section-number-4">2.3.11</span> Use <code>Seq.map</code> before your fold to update <code>processCsv</code>; you'll also need to add a new <code>dataMap</code> parameter</h4>
+</div>
+
+<div id="outline-container-org26a569b" class="outline-4">
+<h4 id="org26a569b"><span class="section-number-4">2.3.12</span> Open up FunctionalTester/Program.fs and add the new <code>testCase</code> below</h4>
+<div class="outline-text-4" id="text-2-3-12">
+<div class="org-src-container">
+<pre class="src src-fsharp">testCase <span style="color: #2d9574;">"Test mapping"</span> <span style="color: #87cefa;">&lt;|</span> <span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #4f97d7;">()</span> -&gt;
+    <span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">inputRow</span> =
+        <span style="color: #4f97d7;">{</span> name = <span style="color: #2d9574;">"Bob"</span>
+          emailAddress = <span style="color: #2d9574;">"bob@example.com"</span>
+          message = <span style="color: #2d9574;">"Hello Bob!"</span> <span style="color: #4f97d7;">}</span>
+    <span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">result</span> =
+        rowToEmail inputRow
+    Expect.equal result.address inputRow.emailAddress <span style="color: #2d9574;">"Email address is transferred unchanged"</span>
+    Expect.equal result.subject <span style="color: #2d9574;">"Hi Bob!"</span> <span style="color: #2d9574;">"The name is used to create the subject"</span>
+    Expect.equal result.message inputRow.message <span style="color: #2d9574;">"Use the message as is"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3fe6f8a" class="outline-4">
+<h4 id="org3fe6f8a"><span class="section-number-4">2.3.13</span> Sanity check!</h4>
+<div class="outline-text-4" id="text-2-3-13">
+<p>
+You should now have a <code>processCsv</code> function that looks something like the one below:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp" id="org68e2fab"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">processCsv</span> <span style="color: #7590db;">read</span> <span style="color: #7590db;">send</span> <span style="color: #7590db;">mapData</span> <span style="color: #7590db;">input</span> =
+    read input
+    <span style="color: #87cefa;">|&gt;</span> Seq.distinct
+    <span style="color: #87cefa;">|&gt;</span> Seq.map mapData
+    <span style="color: #87cefa;">|&gt;</span> Seq.fold <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #7590db;">count</span> <span style="color: #7590db;">data</span> -&gt; <span style="color: #4f97d7; font-weight: bold;">if</span> send data <span style="color: #4f97d7; font-weight: bold;">then</span> count + <span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">else</span> count<span style="color: #4f97d7;">)</span> <span style="color: #a45bad;">0</span>
+</pre>
+</div>
+
+<p>
+That looks a little shorter than our previous interface and class definitions, but there is something else important to note. If you have any type annotations on your version of the function, remove them now.
+</p>
+
+<p>
+You'll notice that the resulting function signature is very generic:
+</p>
+
+<pre class="example">
+val processCsv :
+  read:('a -&gt; #seq&lt;'c&gt;) -&gt;
+    send:('d -&gt; bool) -&gt; mapData:('c -&gt; 'd) -&gt; input:'a -&gt; int
+    when 'c : equality
+
+</pre>
+
+<p>
+Suddenly testing here has become a lot easier; we don't need a csv reader to test, we can pass in any
+function that takes an input and returns a sequence. We don't need a mock email sender, as the send function
+can be any function that returns a bool.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org885364d" class="outline-3">
+<h3 id="org885364d"><span class="section-number-3">2.4</span> Email Sender extensions</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Congratulations, you've covered all of the core topics for this section!
+</p>
+
+
+<p>
+Now we start the brain stretching!
+</p>
+
+<p>
+In reality, most of these steps can fail; if they do, we want to know about it, but we do not want the pipeline to "break" - so throwing an exception is not going to help.
+</p>
+
+<p>
+We want a process that looks like this:
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="email_sender_advanced.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgc1cfc58" class="outline-4">
+<h4 id="orgc1cfc58"><span class="section-number-4">2.4.1</span> Open up the <code>FunctionalSenderExtention</code> project</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+There's tests already set up in <code>FunctionalTesterExtention</code>; this is just to make sure we're starting on the same page. Take a moment to compare this to the code you ended up with in the previous section - it should look similar.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org506dfc7" class="outline-4">
+<h4 id="org506dfc7"><span class="section-number-4">2.4.2</span> Error handling</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+We do not want any of our functions to throw; instead we'll use the <code>Choice&lt;'a, 'b&gt;</code> to return either a <code>Choice1Of2&lt;'result&gt;</code> if the operation is successful, or a <code>Choice2Of2&lt;Exception&gt;</code> if the operation fails.
+</p>
+
+<p>
+Add this error handling function to your code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">capture</span> <span style="color: #7590db;">func</span> <span style="color: #7590db;">x</span> =
+    <span style="color: #4f97d7; font-weight: bold;">try</span>
+        func x
+        <span style="color: #87cefa;">|&gt;</span> Choice1Of2
+    <span style="color: #4f97d7; font-weight: bold;">with</span>
+    <span style="color: #87cefa;">|</span> e -&gt; Choice2Of2 e
+</pre>
+</div>
+
+<pre class="example">
+val capture : func:('a -&gt; 'b) -&gt; x:'a -&gt; Choice&lt;'b,exn&gt;
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgad859f2" class="outline-4">
+<h4 id="orgad859f2"><span class="section-number-4">2.4.3</span> Amend <code>sendEmail</code> to be a bit more "real life"</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+Make <code>sendEmail</code> return the email address sent to if it succeeds, or throw on failure.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6589328" class="outline-4">
+<h4 id="org6589328"><span class="section-number-4">2.4.4</span> Wrap your functions</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+In diagram above, you can see that three of your functions have potential failure cases:
+</p>
+
+<ul class="org-ul">
+<li>readCsv</li>
+<li>rowToEmail</li>
+<li>sendEmail</li>
+</ul>
+
+<p>
+Wrap each of them using the <code>capture</code> function to give you:
+</p>
+
+<ul class="org-ul">
+<li>safeReadCsv</li>
+<li>safeRowToEmail</li>
+<li>safeSendEmail</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8336037" class="outline-4">
+<h4 id="org8336037"><span class="section-number-4">2.4.5</span> Work out how to combine our new functions</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+We now need to rewrite <code>processCsv</code> with our safe functions; you'll notice the types no longer match up. This is another moment of higher order functions to the rescue. We're going to create a function which knows how to take one of our "safe" <code>Choice&lt;'a, Exception&gt;</code> results, unwrap <code>'a</code> and then pass <code>'a</code> into the next "safe" function.
+</p>
+
+<p>
+Write a method called <code>bind</code>. Here is a <code>let</code> declaration with types to get you started:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">bind</span> <span style="color: #4f97d7;">(</span><span style="color: #7590db;">func</span> : 'a -&gt; Choice&lt;'b, exn&gt;<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">(</span><span style="color: #7590db;">m</span> : <span style="color: #ce537a; font-weight: bold;">Choice</span><span style="color: #b2b2b2; background-color: #292b2e;">&lt;'a,exn&gt;</span><span style="color: #4f97d7;">)</span> =
+    ...your body here...
+</pre>
+</div>
+
+<p>
+We'll also need a way (normally called <code>return</code>) to take a "normal" value and wrap it into a <code>Choice&lt;'a, exn&gt;</code>. In our case we don't even need a function for this: it is exactly what <code>Choice1Of2</code> does.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orge5c9d01" class="outline-4">
+<h4 id="orge5c9d01"><span class="section-number-4">2.4.6</span> Why is bind called bind?</h4>
+<div class="outline-text-4" id="text-2-4-6">
+<p>
+You may know that <code>let</code> in f# is referred to as a "let binding" - it "binds" a value to a name.
+</p>
+
+<p>
+So why is the <code>bind</code> function traditionally called bind? Look at the example below:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">safeProcessCsv</span> <span style="color: #7590db;">read</span> <span style="color: #7590db;">send</span> <span style="color: #7590db;">mapData</span> <span style="color: #7590db;">input</span> =
+    read input
+    <span style="color: #87cefa;">|&gt;</span> bind <span style="color: #4f97d7;">(</span><span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #7590db;">rows</span> -&gt;
+    rows
+    <span style="color: #87cefa;">|&gt;</span> Seq.distinct
+    <span style="color: #87cefa;">|&gt;</span> Seq.map mapData
+    <span style="color: #87cefa;">|&gt;</span> Seq.fold <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #7590db;">count</span> <span style="color: #7590db;">data</span> -&gt; <span style="color: #4f97d7; font-weight: bold;">if</span> send data <span style="color: #4f97d7; font-weight: bold;">then</span> count + <span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">else</span> count<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0</span>
+    <span style="color: #87cefa;">|&gt;</span> Choice1Of2<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+|&gt; bind (fun rows -&gt;
+  -------^^^^
+
+/Users/mavnn/Dropbox/@mavnn/Talks/ProgNETFunctionalProgramming/stdin(115,8): error FS0039: The value or constructor 'bind' is not defined. Maybe you want one of the following:
+   Bid
+
+</pre>
+
+<p>
+You can see that the bind function allows us to "name" the rows result from a "safe" read function.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge00aabf" class="outline-4">
+<h4 id="orge00aabf"><span class="section-number-4">2.4.7</span> Extract the logic in fold to a function</h4>
+<div class="outline-text-4" id="text-2-4-7">
+<p>
+Now that you want a safe send function, your fold logic will become more complicated. Extract the anonymous inline function and give it a name. Rewrite it so that it can cope with new <code>safeSendEmail</code> function.
+</p>
+
+<p>
+You'll want to define a type to store the state of the fold (should contain a list of email addresses and a list of expections).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f51b59" class="outline-4">
+<h4 id="org1f51b59"><span class="section-number-4">2.4.8</span> Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work</h4>
+</div>
+
+<div id="outline-container-orge6abc03" class="outline-4">
+<h4 id="orge6abc03"><span class="section-number-4">2.4.9</span> Add some syntax sugar</h4>
+<div class="outline-text-4" id="text-2-4-9">
+<p>
+It turns out the pattern of using bind to unwrap values is so common, F# provides a
+feature called computational expressions to make such code easier to read.
+</p>
+
+<p>
+They can do a lot of other things as well, but let's create the simplest possible version.
+</p>
+
+<p>
+Computational Expressions are defined by creating a class; that class must have
+methods on with particular names and signatures.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0afabd3" class="outline-4">
+<h4 id="org0afabd3"><span class="section-number-4">2.4.10</span> Create a class called CaptureBuilder</h4>
+<div class="outline-text-4" id="text-2-4-10">
+<ul class="org-ul">
+<li>The syntax for creating a class is:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">type</span> <span style="color: #ce537a; font-weight: bold;">MyClassName</span> <span style="color: #4f97d7;">(</span><span style="color: #7590db;">one</span><span style="color: #4f97d7;">)</span> =
+    <span style="color: #2aa1ae; background-color: #292e34;">// </span><span style="color: #2aa1ae; background-color: #292e34;">constructor logic</span>
+    <span style="color: #4f97d7; font-weight: bold;">member</span> <span style="color: #7590db;">this</span>.<span style="color: #bc6ec5; font-weight: bold;">MyMember</span> <span style="color: #4f97d7;">(</span><span style="color: #7590db;">two</span><span style="color: #4f97d7;">)</span> =
+        printfn <span style="color: #2d9574;">"I'm an instance method on a class!"</span>
+        one + two
+    <span style="color: #4f97d7; font-weight: bold;">static</span> <span style="color: #4f97d7; font-weight: bold;">member</span> <span style="color: #bc6ec5; font-weight: bold;">Static</span> <span style="color: #4f97d7;">()</span> =
+        <span style="color: #2d9574;">"A static method - shocking!"</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>It needs to have members:</li>
+</ul>
+
+<p>
+<code>Bind</code> with signature <code>member Bind : (value : Choice1Of2&lt;'a, exn&gt; * continuation : 'a -&gt; Choice&lt;'b, exn&gt;) -&gt; Choice&lt;'b, exn&gt;</code>
+<code>Return</code> with signature <code>member Return : (value : 'a) -&gt; Choice&lt;'a, exn&gt;</code>
+</p>
+
+<p>
+Use your existing <code>bind</code> function to build the <code>Bind</code> method.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5ecff0b" class="outline-4">
+<h4 id="org5ecff0b"><span class="section-number-4">2.4.11</span> Initialize an a single instance for your new class</h4>
+<div class="outline-text-4" id="text-2-4-11">
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">capture</span> = CaptureBuilder<span style="color: #4f97d7;">()</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ce527c" class="outline-4">
+<h4 id="org8ce527c"><span class="section-number-4">2.4.12</span> You can now write code that looks like this</h4>
+<div class="outline-text-4" id="text-2-4-12">
+<div class="org-src-container">
+<pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">safeProcessCsv</span> <span style="color: #7590db;">read</span> <span style="color: #7590db;">send</span> <span style="color: #7590db;">mapData</span> <span style="color: #7590db;">input</span> =
+    capture <span style="color: #4f97d7;">{</span>
+      <span style="color: #4f97d7; font-weight: bold;">let!</span> rows = read input
+      rows
+      <span style="color: #87cefa;">|&gt;</span> Seq.distinct
+      <span style="color: #87cefa;">|&gt;</span> Seq.map mapData
+      <span style="color: #87cefa;">|&gt;</span> Seq.fold <span style="color: #bc6ec5;">(</span><span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #7590db;">count</span> <span style="color: #7590db;">data</span> -&gt; <span style="color: #4f97d7; font-weight: bold;">if</span> send data <span style="color: #4f97d7; font-weight: bold;">then</span> count + <span style="color: #a45bad;">1</span> <span style="color: #4f97d7; font-weight: bold;">else</span> count<span style="color: #bc6ec5;">)</span> <span style="color: #a45bad;">0</span>
+      <span style="color: #87cefa;">|&gt;</span> Choice1Of2
+    <span style="color: #4f97d7;">}</span>
+</pre>
+</div>
+
+<p>
+That <code>let!</code> there is where your bind code is being called. You can find out (much) more
+about Computational Expressions at <a href="http://fsharpforfunandprofit.com/series/computation-expressions.html">F# for Fun and Profit</a>.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Michael Newton</p>
+<p class="date">Created: 2017-09-15 Fri 07:34</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
