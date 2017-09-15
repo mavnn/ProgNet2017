@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-09-15 Fri 07:34 -->
+<!-- 2017-09-15 Fri 09:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Functional Programming with F#</title>
@@ -239,62 +239,62 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5b59439">1. Topics and F# cheatsheet</a>
+<li><a href="#org53187e8">1. Topics and F# cheatsheet</a>
 <ul>
-<li><a href="#orgefc4ec0">1.1. Immutability</a></li>
-<li><a href="#org3c03b4e">1.2. Pure Functions (Referential Transparency)</a></li>
-<li><a href="#org5cb9872">1.3. Union Types</a></li>
-<li><a href="#org4afcaee">1.4. Higher order functions</a></li>
+<li><a href="#orgf7da859">1.1. Immutability</a></li>
+<li><a href="#orgfe66c6d">1.2. Pure Functions (Referential Transparency)</a></li>
+<li><a href="#org18bdcfc">1.3. Union Types</a></li>
+<li><a href="#orge906cff">1.4. Higher order functions</a></li>
 </ul>
 </li>
-<li><a href="#org7f60c60">2. Exercises</a>
+<li><a href="#orgf43662e">2. Exercises</a>
 <ul>
-<li><a href="#orgb0b878e">2.1. ObservableSnake</a>
+<li><a href="#org69954a0">2.1. ObservableSnake</a>
 <ul>
-<li><a href="#org87dc1c3">2.1.1. Functional console game</a></li>
-<li><a href="#orgf19d4a9">2.1.2. Currently <b>very</b> slow to redraw</a></li>
-<li><a href="#org6d0af56">2.1.3. Make the game more efficient by only updating the console where it has actually changed:</a></li>
-<li><a href="#org8ccae2b">2.1.4. Replace the <code>run</code> function with the code below</a></li>
-<li><a href="#orgbd03657">2.1.5. See if you can add a new stream of events to the game:</a></li>
+<li><a href="#org91ef85c">2.1.1. Functional console game</a></li>
+<li><a href="#org14fae5e">2.1.2. Currently <b>very</b> slow to redraw</a></li>
+<li><a href="#org1b6bd41">2.1.3. Make the game more efficient by only updating the console where it has actually changed:</a></li>
+<li><a href="#org3b7c838">2.1.4. Replace the <code>run</code> function with the code below</a></li>
+<li><a href="#org951062e">2.1.5. See if you can add a new stream of events to the game:</a></li>
 </ul>
 </li>
-<li><a href="#org514fefb">2.2. ObservableSnake extensions</a>
+<li><a href="#org3f7f390">2.2. ObservableSnake extensions</a>
 <ul>
-<li><a href="#orgb3afe5c">2.2.1. Make the snake get longer each time the food is eaten</a></li>
-<li><a href="#org80ce87e">2.2.2. Add a "death" mechanic for when the snake hits itself or a wall</a></li>
+<li><a href="#org5929f16">2.2.1. Make the snake get longer each time the food is eaten</a></li>
+<li><a href="#org09212df">2.2.2. Add a "death" mechanic for when the snake hits itself or a wall</a></li>
 </ul>
 </li>
-<li><a href="#org66349c3">2.3. Email Sender</a>
+<li><a href="#org07e97ce">2.3. Email Sender</a>
 <ul>
-<li><a href="#orgf469178">2.3.1. Run the tests!</a></li>
-<li><a href="#orgbaeaa07">2.3.2. Replace <code>type CsvRow</code> with a F# record type</a></li>
-<li><a href="#org44fae9c">2.3.3. Remove interfaces &amp; turn classes that implemented the SRP interfaces into functions</a></li>
-<li><a href="#org0473bad">2.3.4. Write a function that contains the logic in the body of the <code>for row in...</code> loop</a></li>
-<li><a href="#org5eee9a9">2.3.5. Rewrite <code>processCsv</code> using <code>Seq.fold</code></a></li>
-<li><a href="#org0ebde36">2.3.6. Check all your tests still pass (after amending them)</a></li>
-<li><a href="#orgef61ad7">2.3.7. Let's make the <code>CsvRow</code> to email message logic pluggable!</a></li>
-<li><a href="#org20fcc59">2.3.8. Create a new <code>EmailToSend</code> record type with <code>address</code>, <code>subject</code> &amp; <code>message</code> fields</a></li>
-<li><a href="#orga166a3e">2.3.9. Write a <code>rowToEmail</code> function of type <code>CsvRow -&gt; EmailToSend</code></a></li>
-<li><a href="#org42020c1">2.3.10. Amend <code>sendEmail</code> to have type <code>EmailToSend -&gt; bool</code></a></li>
-<li><a href="#org83f62bd">2.3.11. Use <code>Seq.map</code> before your fold to update <code>processCsv</code>; you'll also need to add a new <code>dataMap</code> parameter</a></li>
-<li><a href="#org26a569b">2.3.12. Open up FunctionalTester/Program.fs and add the new <code>testCase</code> below</a></li>
-<li><a href="#org3fe6f8a">2.3.13. Sanity check!</a></li>
+<li><a href="#orga6c48b9">2.3.1. Run the tests!</a></li>
+<li><a href="#org1db84fd">2.3.2. Replace <code>type CsvRow</code> with a F# record type</a></li>
+<li><a href="#orgc00a0a6">2.3.3. Remove interfaces &amp; turn classes that implemented the SRP interfaces into functions</a></li>
+<li><a href="#orgcfc05b0">2.3.4. Write a function that contains the logic in the body of the <code>for row in...</code> loop</a></li>
+<li><a href="#org03ba591">2.3.5. Rewrite <code>processCsv</code> using <code>Seq.fold</code></a></li>
+<li><a href="#orgc596db3">2.3.6. Check all your tests still pass (after amending them)</a></li>
+<li><a href="#org099b8eb">2.3.7. Let's make the <code>CsvRow</code> to email message logic pluggable!</a></li>
+<li><a href="#org8a25215">2.3.8. Create a new <code>EmailToSend</code> record type with <code>address</code>, <code>subject</code> &amp; <code>message</code> fields</a></li>
+<li><a href="#orgf96b8f9">2.3.9. Write a <code>rowToEmail</code> function of type <code>CsvRow -&gt; EmailToSend</code></a></li>
+<li><a href="#org3ea63ae">2.3.10. Amend <code>sendEmail</code> to have type <code>EmailToSend -&gt; bool</code></a></li>
+<li><a href="#org24489af">2.3.11. Use <code>Seq.map</code> before your fold to update <code>processCsv</code>; you'll also need to add a new <code>dataMap</code> parameter</a></li>
+<li><a href="#orge66002d">2.3.12. Open up FunctionalTester/Program.fs and add the new <code>testCase</code> below</a></li>
+<li><a href="#org2c62895">2.3.13. Sanity check!</a></li>
 </ul>
 </li>
-<li><a href="#org885364d">2.4. Email Sender extensions</a>
+<li><a href="#org55bb975">2.4. Email Sender extensions</a>
 <ul>
-<li><a href="#orgc1cfc58">2.4.1. Open up the <code>FunctionalSenderExtention</code> project</a></li>
-<li><a href="#org506dfc7">2.4.2. Error handling</a></li>
-<li><a href="#orgad859f2">2.4.3. Amend <code>sendEmail</code> to be a bit more "real life"</a></li>
-<li><a href="#org6589328">2.4.4. Wrap your functions</a></li>
-<li><a href="#org8336037">2.4.5. Work out how to combine our new functions</a></li>
-<li><a href="#orge5c9d01">2.4.6. Why is bind called bind?</a></li>
-<li><a href="#orge00aabf">2.4.7. Extract the logic in fold to a function</a></li>
-<li><a href="#org1f51b59">2.4.8. Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work</a></li>
-<li><a href="#orge6abc03">2.4.9. Add some syntax sugar</a></li>
-<li><a href="#org0afabd3">2.4.10. Create a class called CaptureBuilder</a></li>
-<li><a href="#org5ecff0b">2.4.11. Initialize an a single instance for your new class</a></li>
-<li><a href="#org8ce527c">2.4.12. You can now write code that looks like this</a></li>
+<li><a href="#org59a1fe1">2.4.1. Open up the <code>FunctionalSenderExtention</code> project</a></li>
+<li><a href="#org1374a13">2.4.2. Error handling</a></li>
+<li><a href="#orga967e98">2.4.3. Amend <code>sendEmail</code> to be a bit more "real life"</a></li>
+<li><a href="#org9c16113">2.4.4. Wrap your functions</a></li>
+<li><a href="#org672ce11">2.4.5. Work out how to combine our new functions</a></li>
+<li><a href="#org7860641">2.4.6. Why is bind called bind?</a></li>
+<li><a href="#orga396d04">2.4.7. Extract the logic in fold to a function</a></li>
+<li><a href="#orgca6ed7c">2.4.8. Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work</a></li>
+<li><a href="#org2bd4c61">2.4.9. Add some syntax sugar</a></li>
+<li><a href="#orgacb84e1">2.4.10. Create a class called CaptureBuilder</a></li>
+<li><a href="#org61c67bd">2.4.11. Initialize an a single instance for your new class</a></li>
+<li><a href="#orgc080f06">2.4.12. You can now write code that looks like this</a></li>
 </ul>
 </li>
 </ul>
@@ -303,11 +303,11 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5b59439" class="outline-2">
-<h2 id="org5b59439"><span class="section-number-2">1</span> Topics and F# cheatsheet</h2>
+<div id="outline-container-org53187e8" class="outline-2">
+<h2 id="org53187e8"><span class="section-number-2">1</span> Topics and F# cheatsheet</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-orgefc4ec0" class="outline-3">
-<h3 id="orgefc4ec0"><span class="section-number-3">1.1</span> Immutability</h3>
+</div><div id="outline-container-orgf7da859" class="outline-3">
+<h3 id="orgf7da859"><span class="section-number-3">1.1</span> Immutability</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 F# provides "Records" - immutable data types. This means once you have created a record, you cannot change the value of any of its fields.
@@ -334,8 +334,8 @@ Generally record fields are given lower case names, partly to match the OCaml co
 </div>
 </div>
 
-<div id="outline-container-org3c03b4e" class="outline-3">
-<h3 id="org3c03b4e"><span class="section-number-3">1.2</span> Pure Functions (Referential Transparency)</h3>
+<div id="outline-container-orgfe66c6d" class="outline-3">
+<h3 id="orgfe66c6d"><span class="section-number-3">1.2</span> Pure Functions (Referential Transparency)</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Defining a function in F# looks like this:
@@ -382,10 +382,7 @@ Both of the functions above are "Pure"; that means that if you give them the sam
 </div>
 
 <pre class="example">
-writeToDb userId name;;
-  ----^^^^^^^^^
-
-/Users/mavnn/Dropbox/@mavnn/Talks/ProgNETFunctionalProgramming/stdin(81,5): error FS0039: The value or constructor 'writeToDb' is not defined.
+val impure : userId:Guid -&gt; name:string -&gt; unit
 
 </pre>
 
@@ -395,8 +392,8 @@ Impure functions by contrast, have side effects outside of the function body (su
 </div>
 </div>
 
-<div id="outline-container-org5cb9872" class="outline-3">
-<h3 id="org5cb9872"><span class="section-number-3">1.3</span> Union Types</h3>
+<div id="outline-container-org18bdcfc" class="outline-3">
+<h3 id="org18bdcfc"><span class="section-number-3">1.3</span> Union Types</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 In theory union types are unrelated to functional programming concepts - but in practice they tend to show up a lot in functional programming languages.
@@ -426,10 +423,7 @@ You can then "pattern match" on the union type when it is time to use it:
 </div>
 
 <pre class="example">
-| EmailAddress em -&gt; sendEmail em
-  ------^^^^^^^^^^^^
-
-/Users/mavnn/Dropbox/@mavnn/Talks/ProgNETFunctionalProgramming/stdin(85,7): error FS0039: The pattern discriminator 'EmailAddress' is not defined.
+val sendMessage : contactDetails:ContactDetails -&gt; unit
 
 </pre>
 
@@ -439,8 +433,8 @@ The compiler will warn if not all of the options are covered.
 </div>
 </div>
 
-<div id="outline-container-org4afcaee" class="outline-3">
-<h3 id="org4afcaee"><span class="section-number-3">1.4</span> Higher order functions</h3>
+<div id="outline-container-orge906cff" class="outline-3">
+<h3 id="orge906cff"><span class="section-number-3">1.4</span> Higher order functions</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Functional programming involves a lot of coding with, well, functions. Let's have a look at processing a list:
@@ -489,14 +483,14 @@ The <code>loggedFunction</code> function will take a name to log against and a f
 </div>
 </div>
 
-<div id="outline-container-org7f60c60" class="outline-2">
-<h2 id="org7f60c60"><span class="section-number-2">2</span> Exercises</h2>
+<div id="outline-container-orgf43662e" class="outline-2">
+<h2 id="orgf43662e"><span class="section-number-2">2</span> Exercises</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-orgb0b878e" class="outline-3">
-<h3 id="orgb0b878e"><span class="section-number-3">2.1</span> ObservableSnake</h3>
+</div><div id="outline-container-org69954a0" class="outline-3">
+<h3 id="org69954a0"><span class="section-number-3">2.1</span> ObservableSnake</h3>
 <div class="outline-text-3" id="text-2-1">
-</div><div id="outline-container-org87dc1c3" class="outline-4">
-<h4 id="org87dc1c3"><span class="section-number-4">2.1.1</span> Functional console game</h4>
+</div><div id="outline-container-org91ef85c" class="outline-4">
+<h4 id="org91ef85c"><span class="section-number-4">2.1.1</span> Functional console game</h4>
 <div class="outline-text-4" id="text-2-1-1">
 
 <div class="figure">
@@ -506,12 +500,12 @@ The <code>loggedFunction</code> function will take a name to log against and a f
 </div>
 </div>
 
-<div id="outline-container-orgf19d4a9" class="outline-4">
-<h4 id="orgf19d4a9"><span class="section-number-4">2.1.2</span> Currently <b>very</b> slow to redraw</h4>
+<div id="outline-container-org14fae5e" class="outline-4">
+<h4 id="org14fae5e"><span class="section-number-4">2.1.2</span> Currently <b>very</b> slow to redraw</h4>
 </div>
 
-<div id="outline-container-org6d0af56" class="outline-4">
-<h4 id="org6d0af56"><span class="section-number-4">2.1.3</span> Make the game more efficient by only updating the console where it has actually changed:</h4>
+<div id="outline-container-org1b6bd41" class="outline-4">
+<h4 id="org1b6bd41"><span class="section-number-4">2.1.3</span> Make the game more efficient by only updating the console where it has actually changed:</h4>
 <div class="outline-text-4" id="text-2-1-3">
 <ul class="org-ul">
 <li>First write a new <code>changesBetweenTurns</code> function that takes a new and old <code>GameData</code> and returns only the changed locations</li>
@@ -522,8 +516,8 @@ The <code>loggedFunction</code> function will take a name to log against and a f
 </div>
 </div>
 
-<div id="outline-container-org8ccae2b" class="outline-4">
-<h4 id="org8ccae2b"><span class="section-number-4">2.1.4</span> Replace the <code>run</code> function with the code below</h4>
+<div id="outline-container-org3b7c838" class="outline-4">
+<h4 id="org3b7c838"><span class="section-number-4">2.1.4</span> Replace the <code>run</code> function with the code below</h4>
 <div class="outline-text-4" id="text-2-1-4">
 <ul class="org-ul">
 <li>Predict what it will do before you you it!</li>
@@ -553,8 +547,8 @@ tickWithDirection
 </div>
 </div>
 
-<div id="outline-container-orgbd03657" class="outline-4">
-<h4 id="orgbd03657"><span class="section-number-4">2.1.5</span> See if you can add a new stream of events to the game:</h4>
+<div id="outline-container-org951062e" class="outline-4">
+<h4 id="org951062e"><span class="section-number-4">2.1.5</span> See if you can add a new stream of events to the game:</h4>
 <div class="outline-text-4" id="text-2-1-5">
 <ul class="org-ul">
 <li>Randomly appearing food to eat (<code>a</code> pples, maybe?)</li>
@@ -565,8 +559,8 @@ tickWithDirection
 </div>
 </div>
 
-<div id="outline-container-org514fefb" class="outline-3">
-<h3 id="org514fefb"><span class="section-number-3">2.2</span> ObservableSnake extensions</h3>
+<div id="outline-container-org3f7f390" class="outline-3">
+<h3 id="org3f7f390"><span class="section-number-3">2.2</span> ObservableSnake extensions</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Congratulations! You've finished the core material for this section, feel free
@@ -574,17 +568,17 @@ to either help other people out or have a go at the challenges below.
 </p>
 </div>
 
-<div id="outline-container-orgb3afe5c" class="outline-4">
-<h4 id="orgb3afe5c"><span class="section-number-4">2.2.1</span> Make the snake get longer each time the food is eaten</h4>
+<div id="outline-container-org5929f16" class="outline-4">
+<h4 id="org5929f16"><span class="section-number-4">2.2.1</span> Make the snake get longer each time the food is eaten</h4>
 </div>
 
-<div id="outline-container-org80ce87e" class="outline-4">
-<h4 id="org80ce87e"><span class="section-number-4">2.2.2</span> Add a "death" mechanic for when the snake hits itself or a wall</h4>
+<div id="outline-container-org09212df" class="outline-4">
+<h4 id="org09212df"><span class="section-number-4">2.2.2</span> Add a "death" mechanic for when the snake hits itself or a wall</h4>
 </div>
 </div>
 
-<div id="outline-container-org66349c3" class="outline-3">
-<h3 id="org66349c3"><span class="section-number-3">2.3</span> Email Sender</h3>
+<div id="outline-container-org07e97ce" class="outline-3">
+<h3 id="org07e97ce"><span class="section-number-3">2.3</span> Email Sender</h3>
 <div class="outline-text-3" id="text-2-3">
 
 <div class="figure">
@@ -594,8 +588,8 @@ Sorry, your browser does not support SVG.</object>
 </div>
 </div>
 
-<div id="outline-container-orgf469178" class="outline-4">
-<h4 id="orgf469178"><span class="section-number-4">2.3.1</span> Run the tests!</h4>
+<div id="outline-container-orga6c48b9" class="outline-4">
+<h4 id="orga6c48b9"><span class="section-number-4">2.3.1</span> Run the tests!</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
 <pre class="src src-sh">dotnet run -p FunctionalTester/FunctionalTester.fsproj
@@ -604,8 +598,8 @@ Sorry, your browser does not support SVG.</object>
 </div>
 </div>
 
-<div id="outline-container-orgbaeaa07" class="outline-4">
-<h4 id="orgbaeaa07"><span class="section-number-4">2.3.2</span> Replace <code>type CsvRow</code> with a F# record type</h4>
+<div id="outline-container-org1db84fd" class="outline-4">
+<h4 id="org1db84fd"><span class="section-number-4">2.3.2</span> Replace <code>type CsvRow</code> with a F# record type</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 It should end up with three fields:
@@ -619,8 +613,8 @@ It should end up with three fields:
 </div>
 </div>
 
-<div id="outline-container-org44fae9c" class="outline-4">
-<h4 id="org44fae9c"><span class="section-number-4">2.3.3</span> Remove interfaces &amp; turn classes that implemented the SRP interfaces into functions</h4>
+<div id="outline-container-orgc00a0a6" class="outline-4">
+<h4 id="orgc00a0a6"><span class="section-number-4">2.3.3</span> Remove interfaces &amp; turn classes that implemented the SRP interfaces into functions</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <p>
 You should end up with three functions:
@@ -634,8 +628,8 @@ You should end up with three functions:
 </div>
 </div>
 
-<div id="outline-container-org0473bad" class="outline-4">
-<h4 id="org0473bad"><span class="section-number-4">2.3.4</span> Write a function that contains the logic in the body of the <code>for row in...</code> loop</h4>
+<div id="outline-container-orgcfc05b0" class="outline-4">
+<h4 id="orgcfc05b0"><span class="section-number-4">2.3.4</span> Write a function that contains the logic in the body of the <code>for row in...</code> loop</h4>
 <div class="outline-text-4" id="text-2-3-4">
 <p>
 This function will be called with each individual <code>CsvRow</code> record; it should end up with a type of <code>CsvRow -&gt; int</code>, and return <code>1</code> if an email is sent or <code>0</code> if it isn't
@@ -643,8 +637,8 @@ This function will be called with each individual <code>CsvRow</code> record; it
 </div>
 </div>
 
-<div id="outline-container-org5eee9a9" class="outline-4">
-<h4 id="org5eee9a9"><span class="section-number-4">2.3.5</span> Rewrite <code>processCsv</code> using <code>Seq.fold</code></h4>
+<div id="outline-container-org03ba591" class="outline-4">
+<h4 id="org03ba591"><span class="section-number-4">2.3.5</span> Rewrite <code>processCsv</code> using <code>Seq.fold</code></h4>
 <div class="outline-text-4" id="text-2-3-5">
 <p>
 Hint: use your function from above, and an initial state of <code>0</code>
@@ -652,8 +646,8 @@ Hint: use your function from above, and an initial state of <code>0</code>
 </div>
 </div>
 
-<div id="outline-container-org0ebde36" class="outline-4">
-<h4 id="org0ebde36"><span class="section-number-4">2.3.6</span> Check all your tests still pass (after amending them)</h4>
+<div id="outline-container-orgc596db3" class="outline-4">
+<h4 id="orgc596db3"><span class="section-number-4">2.3.6</span> Check all your tests still pass (after amending them)</h4>
 <div class="outline-text-4" id="text-2-3-6">
 <p>
 You'll need to replace references to <code>CsvReader</code> and <code>CsvProcessor</code> with calls to your new functions.
@@ -661,28 +655,28 @@ You'll need to replace references to <code>CsvReader</code> and <code>CsvProcess
 </div>
 </div>
 
-<div id="outline-container-orgef61ad7" class="outline-4">
-<h4 id="orgef61ad7"><span class="section-number-4">2.3.7</span> Let's make the <code>CsvRow</code> to email message logic pluggable!</h4>
+<div id="outline-container-org099b8eb" class="outline-4">
+<h4 id="org099b8eb"><span class="section-number-4">2.3.7</span> Let's make the <code>CsvRow</code> to email message logic pluggable!</h4>
 </div>
 
-<div id="outline-container-org20fcc59" class="outline-4">
-<h4 id="org20fcc59"><span class="section-number-4">2.3.8</span> Create a new <code>EmailToSend</code> record type with <code>address</code>, <code>subject</code> &amp; <code>message</code> fields</h4>
+<div id="outline-container-org8a25215" class="outline-4">
+<h4 id="org8a25215"><span class="section-number-4">2.3.8</span> Create a new <code>EmailToSend</code> record type with <code>address</code>, <code>subject</code> &amp; <code>message</code> fields</h4>
 </div>
 
-<div id="outline-container-orga166a3e" class="outline-4">
-<h4 id="orga166a3e"><span class="section-number-4">2.3.9</span> Write a <code>rowToEmail</code> function of type <code>CsvRow -&gt; EmailToSend</code></h4>
+<div id="outline-container-orgf96b8f9" class="outline-4">
+<h4 id="orgf96b8f9"><span class="section-number-4">2.3.9</span> Write a <code>rowToEmail</code> function of type <code>CsvRow -&gt; EmailToSend</code></h4>
 </div>
 
-<div id="outline-container-org42020c1" class="outline-4">
-<h4 id="org42020c1"><span class="section-number-4">2.3.10</span> Amend <code>sendEmail</code> to have type <code>EmailToSend -&gt; bool</code></h4>
+<div id="outline-container-org3ea63ae" class="outline-4">
+<h4 id="org3ea63ae"><span class="section-number-4">2.3.10</span> Amend <code>sendEmail</code> to have type <code>EmailToSend -&gt; bool</code></h4>
 </div>
 
-<div id="outline-container-org83f62bd" class="outline-4">
-<h4 id="org83f62bd"><span class="section-number-4">2.3.11</span> Use <code>Seq.map</code> before your fold to update <code>processCsv</code>; you'll also need to add a new <code>dataMap</code> parameter</h4>
+<div id="outline-container-org24489af" class="outline-4">
+<h4 id="org24489af"><span class="section-number-4">2.3.11</span> Use <code>Seq.map</code> before your fold to update <code>processCsv</code>; you'll also need to add a new <code>dataMap</code> parameter</h4>
 </div>
 
-<div id="outline-container-org26a569b" class="outline-4">
-<h4 id="org26a569b"><span class="section-number-4">2.3.12</span> Open up FunctionalTester/Program.fs and add the new <code>testCase</code> below</h4>
+<div id="outline-container-orge66002d" class="outline-4">
+<h4 id="orge66002d"><span class="section-number-4">2.3.12</span> Open up FunctionalTester/Program.fs and add the new <code>testCase</code> below</h4>
 <div class="outline-text-4" id="text-2-3-12">
 <div class="org-src-container">
 <pre class="src src-fsharp">testCase <span style="color: #2d9574;">"Test mapping"</span> <span style="color: #87cefa;">&lt;|</span> <span style="color: #4f97d7; font-weight: bold;">fun</span> <span style="color: #4f97d7;">()</span> -&gt;
@@ -700,15 +694,15 @@ You'll need to replace references to <code>CsvReader</code> and <code>CsvProcess
 </div>
 </div>
 
-<div id="outline-container-org3fe6f8a" class="outline-4">
-<h4 id="org3fe6f8a"><span class="section-number-4">2.3.13</span> Sanity check!</h4>
+<div id="outline-container-org2c62895" class="outline-4">
+<h4 id="org2c62895"><span class="section-number-4">2.3.13</span> Sanity check!</h4>
 <div class="outline-text-4" id="text-2-3-13">
 <p>
 You should now have a <code>processCsv</code> function that looks something like the one below:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-fsharp" id="org68e2fab"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">processCsv</span> <span style="color: #7590db;">read</span> <span style="color: #7590db;">send</span> <span style="color: #7590db;">mapData</span> <span style="color: #7590db;">input</span> =
+<pre class="src src-fsharp" id="orgb27357e"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">processCsv</span> <span style="color: #7590db;">read</span> <span style="color: #7590db;">send</span> <span style="color: #7590db;">mapData</span> <span style="color: #7590db;">input</span> =
     read input
     <span style="color: #87cefa;">|&gt;</span> Seq.distinct
     <span style="color: #87cefa;">|&gt;</span> Seq.map mapData
@@ -741,8 +735,8 @@ can be any function that returns a bool.
 </div>
 </div>
 
-<div id="outline-container-org885364d" class="outline-3">
-<h3 id="org885364d"><span class="section-number-3">2.4</span> Email Sender extensions</h3>
+<div id="outline-container-org55bb975" class="outline-3">
+<h3 id="org55bb975"><span class="section-number-3">2.4</span> Email Sender extensions</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Congratulations, you've covered all of the core topics for this section!
@@ -770,8 +764,8 @@ Sorry, your browser does not support SVG.</object>
 </div>
 
 
-<div id="outline-container-orgc1cfc58" class="outline-4">
-<h4 id="orgc1cfc58"><span class="section-number-4">2.4.1</span> Open up the <code>FunctionalSenderExtention</code> project</h4>
+<div id="outline-container-org59a1fe1" class="outline-4">
+<h4 id="org59a1fe1"><span class="section-number-4">2.4.1</span> Open up the <code>FunctionalSenderExtention</code> project</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
 There's tests already set up in <code>FunctionalTesterExtention</code>; this is just to make sure we're starting on the same page. Take a moment to compare this to the code you ended up with in the previous section - it should look similar.
@@ -779,8 +773,8 @@ There's tests already set up in <code>FunctionalTesterExtention</code>; this is 
 </div>
 </div>
 
-<div id="outline-container-org506dfc7" class="outline-4">
-<h4 id="org506dfc7"><span class="section-number-4">2.4.2</span> Error handling</h4>
+<div id="outline-container-org1374a13" class="outline-4">
+<h4 id="org1374a13"><span class="section-number-4">2.4.2</span> Error handling</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 We do not want any of our functions to throw; instead we'll use the <code>Choice&lt;'a, 'b&gt;</code> to return either a <code>Choice1Of2&lt;'result&gt;</code> if the operation is successful, or a <code>Choice2Of2&lt;Exception&gt;</code> if the operation fails.
@@ -807,8 +801,8 @@ val capture : func:('a -&gt; 'b) -&gt; x:'a -&gt; Choice&lt;'b,exn&gt;
 </div>
 </div>
 
-<div id="outline-container-orgad859f2" class="outline-4">
-<h4 id="orgad859f2"><span class="section-number-4">2.4.3</span> Amend <code>sendEmail</code> to be a bit more "real life"</h4>
+<div id="outline-container-orga967e98" class="outline-4">
+<h4 id="orga967e98"><span class="section-number-4">2.4.3</span> Amend <code>sendEmail</code> to be a bit more "real life"</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 Make <code>sendEmail</code> return the email address sent to if it succeeds, or throw on failure.
@@ -816,8 +810,8 @@ Make <code>sendEmail</code> return the email address sent to if it succeeds, or 
 </div>
 </div>
 
-<div id="outline-container-org6589328" class="outline-4">
-<h4 id="org6589328"><span class="section-number-4">2.4.4</span> Wrap your functions</h4>
+<div id="outline-container-org9c16113" class="outline-4">
+<h4 id="org9c16113"><span class="section-number-4">2.4.4</span> Wrap your functions</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 In diagram above, you can see that three of your functions have potential failure cases:
@@ -841,8 +835,8 @@ Wrap each of them using the <code>capture</code> function to give you:
 </div>
 </div>
 
-<div id="outline-container-org8336037" class="outline-4">
-<h4 id="org8336037"><span class="section-number-4">2.4.5</span> Work out how to combine our new functions</h4>
+<div id="outline-container-org672ce11" class="outline-4">
+<h4 id="org672ce11"><span class="section-number-4">2.4.5</span> Work out how to combine our new functions</h4>
 <div class="outline-text-4" id="text-2-4-5">
 <p>
 We now need to rewrite <code>processCsv</code> with our safe functions; you'll notice the types no longer match up. This is another moment of higher order functions to the rescue. We're going to create a function which knows how to take one of our "safe" <code>Choice&lt;'a, Exception&gt;</code> results, unwrap <code>'a</code> and then pass <code>'a</code> into the next "safe" function.
@@ -865,8 +859,8 @@ We'll also need a way (normally called <code>return</code>) to take a "normal" v
 </div>
 
 
-<div id="outline-container-orge5c9d01" class="outline-4">
-<h4 id="orge5c9d01"><span class="section-number-4">2.4.6</span> Why is bind called bind?</h4>
+<div id="outline-container-org7860641" class="outline-4">
+<h4 id="org7860641"><span class="section-number-4">2.4.6</span> Why is bind called bind?</h4>
 <div class="outline-text-4" id="text-2-4-6">
 <p>
 You may know that <code>let</code> in f# is referred to as a "let binding" - it "binds" a value to a name.
@@ -892,7 +886,7 @@ So why is the <code>bind</code> function traditionally called bind? Look at the 
 |&gt; bind (fun rows -&gt;
   -------^^^^
 
-/Users/mavnn/Dropbox/@mavnn/Talks/ProgNETFunctionalProgramming/stdin(115,8): error FS0039: The value or constructor 'bind' is not defined. Maybe you want one of the following:
+/Users/mavnn/Documents/Projects/ProgNet2017/Instructions/stdin(125,8): error FS0039: The value or constructor 'bind' is not defined. Maybe you want one of the following:
    Bid
 
 </pre>
@@ -903,8 +897,8 @@ You can see that the bind function allows us to "name" the rows result from a "s
 </div>
 </div>
 
-<div id="outline-container-orge00aabf" class="outline-4">
-<h4 id="orge00aabf"><span class="section-number-4">2.4.7</span> Extract the logic in fold to a function</h4>
+<div id="outline-container-orga396d04" class="outline-4">
+<h4 id="orga396d04"><span class="section-number-4">2.4.7</span> Extract the logic in fold to a function</h4>
 <div class="outline-text-4" id="text-2-4-7">
 <p>
 Now that you want a safe send function, your fold logic will become more complicated. Extract the anonymous inline function and give it a name. Rewrite it so that it can cope with new <code>safeSendEmail</code> function.
@@ -916,12 +910,12 @@ You'll want to define a type to store the state of the fold (should contain a li
 </div>
 </div>
 
-<div id="outline-container-org1f51b59" class="outline-4">
-<h4 id="org1f51b59"><span class="section-number-4">2.4.8</span> Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work</h4>
+<div id="outline-container-orgca6ed7c" class="outline-4">
+<h4 id="orgca6ed7c"><span class="section-number-4">2.4.8</span> Rewrite the tests and add some invalid data to the csv file, and watch your safe code go to work</h4>
 </div>
 
-<div id="outline-container-orge6abc03" class="outline-4">
-<h4 id="orge6abc03"><span class="section-number-4">2.4.9</span> Add some syntax sugar</h4>
+<div id="outline-container-org2bd4c61" class="outline-4">
+<h4 id="org2bd4c61"><span class="section-number-4">2.4.9</span> Add some syntax sugar</h4>
 <div class="outline-text-4" id="text-2-4-9">
 <p>
 It turns out the pattern of using bind to unwrap values is so common, F# provides a
@@ -939,8 +933,8 @@ methods on with particular names and signatures.
 </div>
 </div>
 
-<div id="outline-container-org0afabd3" class="outline-4">
-<h4 id="org0afabd3"><span class="section-number-4">2.4.10</span> Create a class called CaptureBuilder</h4>
+<div id="outline-container-orgacb84e1" class="outline-4">
+<h4 id="orgacb84e1"><span class="section-number-4">2.4.10</span> Create a class called CaptureBuilder</h4>
 <div class="outline-text-4" id="text-2-4-10">
 <ul class="org-ul">
 <li>The syntax for creating a class is:</li>
@@ -972,8 +966,8 @@ Use your existing <code>bind</code> function to build the <code>Bind</code> meth
 </div>
 </div>
 
-<div id="outline-container-org5ecff0b" class="outline-4">
-<h4 id="org5ecff0b"><span class="section-number-4">2.4.11</span> Initialize an a single instance for your new class</h4>
+<div id="outline-container-org61c67bd" class="outline-4">
+<h4 id="org61c67bd"><span class="section-number-4">2.4.11</span> Initialize an a single instance for your new class</h4>
 <div class="outline-text-4" id="text-2-4-11">
 <div class="org-src-container">
 <pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #7590db;">capture</span> = CaptureBuilder<span style="color: #4f97d7;">()</span>
@@ -982,8 +976,8 @@ Use your existing <code>bind</code> function to build the <code>Bind</code> meth
 </div>
 </div>
 
-<div id="outline-container-org8ce527c" class="outline-4">
-<h4 id="org8ce527c"><span class="section-number-4">2.4.12</span> You can now write code that looks like this</h4>
+<div id="outline-container-orgc080f06" class="outline-4">
+<h4 id="orgc080f06"><span class="section-number-4">2.4.12</span> You can now write code that looks like this</h4>
 <div class="outline-text-4" id="text-2-4-12">
 <div class="org-src-container">
 <pre class="src src-fsharp"><span style="color: #4f97d7; font-weight: bold;">let</span> <span style="color: #bc6ec5; font-weight: bold;">safeProcessCsv</span> <span style="color: #7590db;">read</span> <span style="color: #7590db;">send</span> <span style="color: #7590db;">mapData</span> <span style="color: #7590db;">input</span> =
@@ -1009,7 +1003,7 @@ about Computational Expressions at <a href="http://fsharpforfunandprofit.com/ser
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Michael Newton</p>
-<p class="date">Created: 2017-09-15 Fri 07:34</p>
+<p class="date">Created: 2017-09-15 Fri 09:20</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
