@@ -7,6 +7,6 @@ It assumes you'll be working with dotnet core 2.0.
 
 Grab the outline for the tutorial [[/Instructions/TutorialNotes.html][in the "Instructions" folder]].
 
-https://blog.mavnn.co.uk/building-solid-systems-in-f-number/
-https://fsharpforfunandprofit.com/
-book version of above https://www.gitbook.com/book/swlaschin/fsharpforfunandprofit/details
++ https://blog.mavnn.co.uk/building-solid-systems-in-f-number/
++ https://fsharpforfunandprofit.com/
++ book version of above https://www.gitbook.com/book/swlaschin/fsharpforfunandprofit/details
