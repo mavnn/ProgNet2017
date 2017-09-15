@@ -5,4 +5,4 @@ brave!
 
 It assumes you'll be working with dotnet core 2.0.
 
-Grab the outline for the tutorial [[/Instructions/outline.html][in the "Instructions" folder]].
+Grab the outline for the tutorial [[/Instructions/TutorialNotes.html][in the "Instructions" folder]].
